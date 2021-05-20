@@ -1,0 +1,59 @@
+ .imgblock {
+ 		
+ 		
+        overflow-y: scroll;
+        height: 100px;
+        resize: none; /* Remove this if you want the user to resize the textarea */
+    }
+    
+.flexing{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+	 overflow-y: scroll;
+        height: 70%;
+        resize: none; /* Remove this if you want the user to resize the textarea */
+}
+
+.flexing button {
+	width:60px;
+	height: 65px;
+}
+
+button, img{
+	max-width:100%;
+}
+
+.cardblock{
+	display: inline-block;
+	   
+}
+
+textarea {
+	height: 100px;
+}
+
+* {
+	border: 1px solid black;
+}
+
+container-fluid, div {
+	display: inline-block;
+}
+
+.scroll {
+	overflow-y: scroll;
+}
+
+selectdiv {
+	display: flex;
+	flex-direction:row;
+	flex-wrap: wrap;
+	justify-content:space-evenly;
+}
+
+middle {
+	margin: 0 auto;
+}
+
