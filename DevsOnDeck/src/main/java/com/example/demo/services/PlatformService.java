@@ -141,6 +141,18 @@ public class PlatformService {
 	}
 
 
+	public Position findPosition(Long id) {
+		// TODO Auto-generated method stub
+		return pRepo.findById(id).orElse(null);
+	}
+
+
+	public List<Developer> findallDevelopers() {
+		// TODO Auto-generated method stub
+		return (List<Developer>) dRepo.findAll();
+	}
+
+
 	
 
 }

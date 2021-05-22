@@ -32,12 +32,12 @@
 					<label for="myskills" class="col-sm-5 col-md-5 col-form-label"><h4>Pick
 							Your Top 5 Languages</h4></label>
 				
-				<div class="col-sm-7 col-md-7">
+				<div class="col-sm-7 col-md-7 skillblock">
 					<c:forEach items="${dev.myskills}" var="s">
 						<button
 							style="background-image:url(images/${s.name}.png); 
-							 background-position: center; background-repeat: no-repeat; background-size:90% 90%;
-							  height: 60%; width: 20%; margin: 0 auto;"
+							 background-position: center; background-repeat: no-repeat; background-size: cover;
+							  height: 100%; width: 23%; margin: 0 auto;"
 							path="posSkills" value="${s.id}" label="${s.name}"
 							class="col-sm-3 text-center"></button>
 					</c:forEach>
@@ -60,19 +60,19 @@
 						<form:hidden path = "email" value = "${dev.email}"  />
 						
 						
-							<form:select class="col-sm-12 col-md-6 selectdiv" path="myskills"
+							<form:select class="col-sm-12 col-md-4 selectdiv" path="myskills"
 								name="skillz" SIZE="5" multiple="true">
-								<c:forEach items="${skills }" var="s">
-									<div class="selectdiv">
+								
+								<c:forEach items="${skills}" var="s">
+									
 										<form:option
 											style="background-image:url(images/${s.name}.png); 
-							 background-position: center; background-repeat: no-repeat; background-size:90% 90%;
-							  height: 70px; width: 40%; margin: 0 auto;"
+							 background-position: right center; background-repeat: no-repeat; background-size: 40%; width: 100%; height: 70px;
+							  "
 											path="myskills" value="${s.id}" label="${s.name}"
-											class="col-sm-3 text-center" />
-									</div>
+											class="col-sm-4 col-sm-3 text-right" />
 								</c:forEach>
-
+								
 							</form:select>
 						
 						<div class="col-sm-12 col-md-6">

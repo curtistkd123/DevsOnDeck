@@ -25,21 +25,22 @@
 						aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">${dev.myskills.size()*10  }%</div>
 				</div>
 			</div>
-			<div class="card-body"></div>
+			
 			<div class=" form-group row">
 				<div class="row">
 					<label for="myskills" class="col-sm-5 col-md-6 col-form-label"><h4>Pick
 							Your Top 5 Frameworks</h4></label>
-				</div>
+				
 				<div class="col-sm-5 col-md-5">
 					<c:forEach items="${dev.myskills}" var="s">
 						<button
 							style="background-image:url(images/${s.name}.png); 
-							 background-position: center; background-repeat: no-repeat; background-size:90% 90%;
-							  height: 30%; width: 20%; margin: 0 auto;"
+							 background-position: center; background-repeat: no-repeat; background-size: cover;
+							  height: 60%; width: 20%; margin: 0 auto;"
 							path="posSkills" value="${s.id}" label="${s.name}"
 							class="col-sm-3 text-center"></button>
 					</c:forEach>
+				</div>
 				</div>
 			</div>
 
@@ -53,11 +54,11 @@
 						
 							<form:select class="col-sm-12 col-md-6 selectdiv" path="myskills"
 								name="skillz" SIZE="5" multiple="true">
-								<c:forEach items="${frameworks }" var="f">
+								<c:forEach items="${frameworks}" var="f">
 									<div class="selectdiv">
 										<form:option
 											style="background-image:url(images/${f.name}.png); 
-							 background-position: center; background-repeat: no-repeat; background-size:90% 90%;
+							 background-position: center; background-repeat: no-repeat; background-size: cover;
 							  height: 70px; width: 40%; margin: 0 auto;"
 											path="myskills" value="${f.id}" label="${f.name}"
 											class="col-sm-3 text-center" />

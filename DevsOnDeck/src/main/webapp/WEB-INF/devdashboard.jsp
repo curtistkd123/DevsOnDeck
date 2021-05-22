@@ -27,7 +27,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-12 col-md-4">
+				<div class="col-sm-12 col-md-3">
 					<div class="col-sm-12">
 						<h4 class="text-center">Associated Organizations</h4>
 						<c:forEach items="${orgs}" var="o">
@@ -43,8 +43,19 @@
 					<div class="col-sm-12 scroll text-center">
 					<c:forEach items="${positions}" var="p">
 					<div class="col-sm-7 text-center">
-					<c:out value="${p.title}"/></div>
+					<a href="/position/${p.id}"><c:out value="${p.title}"/></a></div>
 					</c:forEach></div>
+				</div>
+				<div class="col-sm-12 col-md-3">
+					<div class="col-sm-12">
+						<h4 class="text-center">Applied Positions</h4>
+						<c:forEach items="${dev.applications}" var="a">
+						<div class="col-sm-12 text-center">
+						
+						<h4><c:out value="${a.title}"/></h4>
+						</div>
+						</c:forEach>
+					</div>
 				</div>
 			</div>
 		</div>

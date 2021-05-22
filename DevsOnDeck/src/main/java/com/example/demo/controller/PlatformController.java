@@ -72,7 +72,7 @@ public class PlatformController {
 			return "OrgSignUp.jsp";
 		}
 		service.createOrg(org);
-		 session.setAttribute("orgId", org.getId());
+		session.setAttribute("orgId", org.getId());
 		return "redirect:/orgSignup";
 	}
 
@@ -90,9 +90,9 @@ public class PlatformController {
 			model.addAttribute("error", "Email and/or password do not match");
 			return "devlogin.jsp";
 		}
-		
+
 		dev = service.findDeveloperByEmail(email);
-		if (session.getAttribute("devid")==null) {
+		if (session.getAttribute("devid") == null) {
 			session.setAttribute("devid", dev.getId());
 		}
 		session.setAttribute("devid", dev.getId());
@@ -120,19 +120,20 @@ public class PlatformController {
 	}
 
 	@GetMapping("/devskills")
-	public String devskills(@ModelAttribute("developer") Developer dev, HttpSession session,Model model) {
+	public String devskills(@ModelAttribute("developer") Developer dev, HttpSession session, Model model) {
 		List<Skill> skills = service.findAllSkills();
-		List<Skill> langs = new ArrayList<Skill>();;
-		for(int i = 0; i < skills.size();i++) {
-			if(skills.get(i).isLanguage()) {
+		List<Skill> langs = new ArrayList<Skill>();
+		;
+		for (int i = 0; i < skills.size(); i++) {
+			if (skills.get(i).isLanguage()) {
 				langs.add(skills.get(i));
 			}
 		}
-		dev = service.findDeveloper((Long) session.getAttribute("devid"));
+		Developer dev1 = service.findDeveloper((Long) session.getAttribute("devid"));
 
-		model.addAttribute("skills",langs);
-		model.addAttribute("dev",dev);
-		
+		model.addAttribute("skills", skills);
+		model.addAttribute("dev", dev1);
+		System.out.println(dev1.getMyskills());
 		return "devskill.jsp";
 	}
 
@@ -143,8 +144,9 @@ public class PlatformController {
 		}
 		Long id = (Long) session.getAttribute("orgId");
 		Organization org = service.findOrgById(id);
-		
+		List<Developer> devs = service.findallDevelopers();
 		model.addAttribute("org", org);
+		model.addAttribute("devs",devs);
 		return "orgdashboard.jsp";
 	}
 
@@ -161,92 +163,169 @@ public class PlatformController {
 	@PostMapping("/newPosition")
 	public String createPosition(@Valid @ModelAttribute("position") Position position, BindingResult result,
 			@RequestParam("posSkills") ArrayList<Long> skillz, HttpSession session, HttpServletRequest request) {
-		
+
 		Long id = (Long) session.getAttribute("orgId");
 		Organization org = service.findOrgById(id);
 		position.setOrganization(org);
 		ArrayList<Skill> skills = new ArrayList<Skill>();
-			
-		for (int i = 0; i < skillz.size(); i++) {	
+
+		for (int i = 0; i < skillz.size(); i++) {
 			Long d = skillz.get(i);
-			Skill s = service.findSkill(d);		
+			Skill s = service.findSkill(d);
 			skills.add(s);
 		}
-		
+
 		System.out.println(skills);
 		pvalidate.validate(position, result);
 		if (result.hasErrors()) {
 			return "newPosition.jsp";
 		}
-		
+
 		// position.setPosSkills(skillz);
 		service.savePosition(position);
 		return "redirect:/orgdashboard";
 	}
-	
-	
-	@GetMapping("/devskillsss")
-	public String devskills( @ModelAttribute("developer") Developer dev,BindingResult result,
-			HttpSession session,Model model,@PathVariable("id")Long id) {
-		if(session.getAttribute("devid")==null) {
-			return"redirect:/devlogin";
+
+	/*@GetMapping("/devskillsss")
+	public String devskills(@ModelAttribute("developer") Developer dev, BindingResult result, HttpSession session,
+			Model model, @PathVariable("id") Long id) {
+		if (session.getAttribute("devid") == null) {
+			return "redirect:/devlogin";
 		}
-		
+
 		Developer dev1 = service.findDeveloper(id);
 		dev1.setMyskills(dev.getMyskills());
 		dev1.setBiography(dev.getBiography());
 		service.saveDev(dev1);
 		session.setAttribute("devid", dev1.getId());
-					
-		
+
 		return "redirect:/devtools/{id}";
+	}*/
+
+	@PostMapping("/devtools/{id}")
+	public String devtools(@Valid @ModelAttribute("developer") Developer dev, BindingResult result, HttpSession session,
+			Model model,RedirectAttributes redirect,@PathVariable("id")Long id) {
+		dvalidate.validate(dev, result);
+		if (result.hasErrors()) {
+			return "devskill.jsp";
+		}
+		Developer dev1 = service.findDeveloper(id);
+		List<Skill> dev1skills = dev1.getMyskills();
+		// dev = service.findDeveloper(id);
+		System.out.println(dev.getId());
+		System.out.println(dev.getMyskills());
+		List<Skill> skillist = dev.getMyskills();
+		
+		for(Skill s:skillist) {
+			if(!dev1.getMyskills().contains(s)) {
+				dev1skills.add(s);
+			}
+		}
+		dev1.setBiography(dev.getBiography());
+		dev1.setMyskills(dev1skills);
+		dev.setMyskills(dev.getMyskills());
+		service.saveDev(dev1);
+	
+		model.addAttribute("dev", dev);
+		session.setAttribute("devid", dev1.getId());
+		return "redirect:/devdashboard";
+	}
+
+	@GetMapping("/devdashboard")
+	public String devdash(HttpSession session, Model model) {
+		Long id = (Long) session.getAttribute("devid");
+		Developer dev = service.findDeveloper(id);
+		model.addAttribute("dev", dev);
+		List<Position> positions = service.findAllPositions();
+		model.addAttribute("positions", positions);
+		List<Organization> companies = service.findAllOrgs();
+		model.addAttribute("orgs", companies);
+		return "devdashboard.jsp";
+	}
+
+	@GetMapping("/organization/{id}")
+	public String orgJobPortal(Model model, @PathVariable("id") Long id, HttpSession session) {
+		Organization org = service.findOrgById(id);
+		Long devid = (Long) session.getAttribute("devid");
+		Developer dev = service.findDeveloper(devid);
+		model.addAttribute("org", org);
+		model.addAttribute("dev", dev);
+		return "orgJobPortal.jsp";
+	}
+
+	@GetMapping("/devtool/{id}")
+	public String devtools(@PathVariable("id") Long id, @ModelAttribute("developer") Developer dev1, Model model) {
+	
+		Developer dev = service.findDeveloper(id);
+		List<Skill> skills = service.findAllSkills();
+		List<Skill> frameworks = new ArrayList<Skill>();
+		for (int i = 0; i < skills.size(); i++) {
+			if (skills.get(i).isFramework()) {
+				frameworks.add(skills.get(i));
+			}
+		}
+		model.addAttribute("dev", dev);
+		model.addAttribute("frameworks",frameworks);
+		return "devtool.jsp";
+
 	}
 	
-
-	
-	@PostMapping("/devtools/{id}")
-	public String devtools(@Valid @ModelAttribute("developer") Developer dev,BindingResult result,
-			HttpSession session,Model model,@PathVariable("id")Long id) {
+	@PostMapping("/devtool/{id}")
+	public String devFram(@Valid @ModelAttribute("developer") Developer dev, BindingResult result, HttpSession session,
+			Model model,RedirectAttributes redirect) {
 		dvalidate.validate(dev, result);
 		if (result.hasErrors()) {
 			return "devskill.jsp";
 		}
 		service.saveDev(dev);
-		dev = service.findDeveloper(id);
+		// dev = service.findDeveloper(id);
+		System.out.println(dev.getId());
 		System.out.println(dev.getMyskills());
 		List<Skill> skills = service.findAllSkills();
 		List<Skill> frameworks = new ArrayList<Skill>();
-		for(int i = 0; i < skills.size();i++) {
-			if(skills.get(i).isFramework()) {
+		for (int i = 0; i < skills.size(); i++) {
+			if (skills.get(i).isFramework()) {
 				frameworks.add(skills.get(i));
 			}
 		}
 		System.out.println(dev.getId());
-		model.addAttribute("dev",dev);		
+		model.addAttribute("dev", dev);
 		session.setAttribute("devid", dev.getId());
-		model.addAttribute("frameworks",frameworks);
-		return"devtool.jsp";
+		model.addAttribute("frameworks", frameworks);
+		redirect.addAttribute("id",dev.getId());
+		return "redirect:/devdashboard";
 	}
 	
-	@GetMapping("/devdashboard")
-	public String devdash(HttpSession session,Model model) {
-		Long id = (Long) session.getAttribute("devid");
-		Developer dev = service.findDeveloper(id);
-		model.addAttribute("dev",dev);
-		List<Position> positions = service.findAllPositions();
-		model.addAttribute("positions",positions);
-		List<Organization> companies = service.findAllOrgs();
-		model.addAttribute("orgs",companies);
-		return"devdashboard.jsp";
-	}
-	
-	@GetMapping("/organization/{id}")
-	public String orgJobPortal(Model model,@PathVariable("id")Long id,HttpSession session) {
-		Organization org = service.findOrgById(id);
+	@GetMapping("/position/{id}")
+	public String position(@ModelAttribute("developer")Developer dev,Model model,@PathVariable("id")Long id,HttpSession session) {
+		Position pos = service.findPosition(id);
 		Long devid = (Long) session.getAttribute("devid");
+		model.addAttribute("pos",pos);
+		model.addAttribute("devid",devid);
+		return"position.jsp";
+	}
+	
+	@GetMapping("/apply/{id}")
+	public String apply(@PathVariable("id")Long id,HttpSession session) {
+		Long devid = (Long) session.getAttribute("devid");
+		
+		Position pos = service.findPosition(id);
+		
 		Developer dev = service.findDeveloper(devid);
-		model.addAttribute("org",org);
-		model.addAttribute("dev",dev);
-		return"orgJobPortal.jsp";
+		List<Position> applications = dev.getApplications();
+		applications.add(pos);
+		dev.setApplications(applications);
+		service.saveDev(dev);
+		return"redirect:/devdashboard";
+	}
+	
+	@GetMapping("/applicants/{id}")
+	public String myPosition(Model model,@PathVariable("id")Long id) {
+		Position pos = service.findPosition(id);
+		List<Developer> devs = service.findallDevelopers();
+		
+		model.addAttribute("pos",pos);
+		model.addAttribute("devs",devs);
+		return"positionApplicants.jsp";
 	}
 }

@@ -61,6 +61,8 @@
 								</tr>
 								<tr>
 									<td colspan="2" rowspan="2"><p><c:out value="${d.biography}" /></p></td>
+									<td>
+									
 								</tr>
 							</table>
 						</c:forEach>

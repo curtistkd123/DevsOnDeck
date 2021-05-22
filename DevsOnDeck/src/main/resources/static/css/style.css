@@ -6,6 +6,10 @@
         resize: none; /* Remove this if you want the user to resize the textarea */
     }
     
+ .skillblock {
+ overflow-x: scroll;
+ }
+    
 .flexing{
 	display: flex;
 	flex-direction: row;
@@ -51,6 +55,11 @@ selectdiv {
 	flex-direction:row;
 	flex-wrap: wrap;
 	justify-content:space-evenly;
+	
+}
+
+.imgselect {
+	width: 20%;
 }
 
 middle {
