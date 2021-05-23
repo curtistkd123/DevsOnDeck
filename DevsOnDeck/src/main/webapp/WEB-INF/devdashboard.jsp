@@ -17,8 +17,8 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-12">
-				<div class="row">
-				<div></div>
+				<div class="row topbar">
+				
 					<h2 class="col-sm-4"><c:out value="${dev.fname}"> <c:out value="${dev.lname}"></c:out></c:out></h2>
 					<h2 class="col-sm-4">DevsOnDeck</h2>
 					<h3 class="col-sm-4 text-right">
@@ -28,8 +28,8 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-3">
-					<div class="col-sm-12">
-						<h4 class="text-center">Associated Organizations</h4>
+					<div class="col-sm-12 rowmap">
+						<h4 class="text-center signup">Associated Organizations</h4>
 						<c:forEach items="${orgs}" var="o">
 						<div class="col-sm-12 text-center">
 						
@@ -38,21 +38,21 @@
 						</c:forEach>
 					</div>
 				</div>
-				<div class="col-sm-12 col-md-6">
-					<h2>Available Positions</h2>
+				<div class="col-sm-12 col-md-6 rowmap">
+					<h2 class="signup">Available Positions</h2>
 					<div class="col-sm-12 scroll text-center">
 					<c:forEach items="${positions}" var="p">
 					<div class="col-sm-7 text-center">
-					<a href="/position/${p.id}"><c:out value="${p.title}"/></a></div>
+					<a href="/position/${p.id}"><h4><c:out value="${p.title}"/></h4></a></div>
 					</c:forEach></div>
 				</div>
-				<div class="col-sm-12 col-md-3">
+				<div class="col-sm-12 col-md-3 rowmap">
 					<div class="col-sm-12">
-						<h4 class="text-center">Applied Positions</h4>
+						<h4 class="text-center signup">Applied Positions</h4>
 						<c:forEach items="${dev.applications}" var="a">
 						<div class="col-sm-12 text-center">
 						
-						<h4><c:out value="${a.title}"/></h4>
+						<h4><a href=""><c:out value="${a.title}"/></a>, <c:out value="${a.organization.orgName}"/></h4>
 						</div>
 						</c:forEach>
 					</div>

@@ -17,14 +17,13 @@
 <body>
 	<div class="container-fluid">
 	<div class="row">
-		<div class="col-sm-12 col-md-8 text-center">
+		<div class="col-sm-12 col-md-8 text-center posback">
 			<h3><c:out value="${pos.title}"/></h3>
 		</div>
-		<div class="col-sm-12 col-md-8">
-			<h3 class="col-sm-6"><c:out value="${pos.description}"/></h3>
-			
-			
-			<a href="/apply/${pos.id}"><button type="submit" class="btn btn-success text-center middle col-sm-6">Apply</button></a>
+		<div class="col-sm-12 col-md-8 text-center">
+			<h3 class="col-sm-12 text-center"><c:out value="${pos.description}"/></h3>
+					
+			<a href="/apply/${pos.id}"><button type="submit" class="btn btn-success text-center middle col-sm-5">Apply</button></a>
 			
 		</div>
 	</div>

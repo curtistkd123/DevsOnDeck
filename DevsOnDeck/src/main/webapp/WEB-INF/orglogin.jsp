@@ -16,7 +16,19 @@
 </head>
 <body>
 	<div class="container-fluid">
-		<div class="card col-md-8">
+	<div class="row">
+					<div class="topbar col-sm-12 col-md-8 rowmap">
+				<h2 class="col-sm-5 col-md-8">DevsOnDeck</h2>
+				<div class="col-sm-6 col-md-3">
+					<div class="col-sm-6">
+						<a href="/devSignup" class="text-right">Dev Registration </a>
+					</div>
+					<div class="col-sm-5 text-right">
+						<a href="/orgSignup"> Org Registraton</a>
+					</div>
+				</div>
+			</div>
+		<div class="card col-md-8 rowmap signup">
 		<div>
 		<div class="text-center" >
 			<h1>Welcome Back!</h1>
@@ -39,7 +51,7 @@
 
 					<div class="form-group row">
 						<label for="password" class="col-sm-2 col-form-label">Password</label>
-						<div class="col-sm-7 col-md-7">
+						<div class="col-sm-10 col-md-7">
 							<input type="password" class="form-control" name="password"
 								placeholder="Enter Password">
 						</div>
@@ -49,6 +61,7 @@
 					<button type="submit" class="btn btn-success">Login</button>
 				</form:form>
 			</div>
+		</div>
 		</div>
 	</div>
 </body>

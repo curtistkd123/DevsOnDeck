@@ -38,7 +38,8 @@
 						<h4 class="text-center">Positions To Fill</h4>
 						<c:forEach items="${org.openPositions}" var="p">
 							<div class="col-sm-12 text-center">
-								<h3>
+								<h3>   
+								
 									<a href="/applicants/${p.id}"><c:out value="${p.title}" /></a>
 								</h3>
 							</div>

@@ -16,19 +16,32 @@
 </head>
 <body>
 	<div class="container">
-		<div class="row">
-			<h2 class="text-center col-sm-12">Add A Position</h2>
+		<div class="row rowmap signup">
+		<div class="col-sm-12">
+				<div class="row topbar">
+				
+					<h2 class="col-sm-4">
+						<c:out value="${org.orgName}"></c:out>
+					</h2>
+					<h2 class="col-sm-4">DevsOnDeck</h2>
+					<h3 class="col-sm-3 text-right">
+						<a href="" class="text-right" class="col-sm-12">Logout</a>
+					</h3>
+			
+				</div>
+			</div>
+			<h2 class="text-center col-sm-12 skillbar">Add A Position</h2>
 			<p>
 				<form:errors path="position.*" />
 			</p>
 			<form:form action="/newPosition" method="POST"
 				modelAttribute="position">
 
-				<div class=" form-group row">
+				<div class=" form-group row ">
 					<form:label for="title" path="title"
 						class="col-sm-2 col-form-label">Title:</form:label>
 					<div class="col-sm-10 col-md-7" >
-					<form:input type="text" class="form-control" path="title"
+					<form:input type="text" class="form-control appwhite" path="title"
 						name="title" placeholder="Enter Title" />
 						</div>
 				</div>
@@ -37,17 +50,17 @@
 
 				<div class="form-group row">
 					<label for="description" class="col-sm-2 col-form-label">Description:</label>
-					<div class="col-sm-7 col-md-7">
-						<form:input type="textarea" class="form-control"
+					<div class="col-sm-10 col-md-7">
+						<form:input type="textarea" class="form-control appwhite"
 							path="description" name="description"
 							placeholder="Enter Details, task and requirements for the position" />
 					</div>
 				</div>
-				<div class="form-group row">
+				<div class="form-group row ">
 					<label for="posSkills" class="col-sm-2 col-form-label">Skills:</label>
 					<div class="col-sm-7 col-md-7">
 
-						<form:select class="col-sm-7 selectdiv" path="posSkills"
+						<form:select class="col-sm-7 selectdiv appwhite" path="posSkills"
 							name="skillz" SIZE="5" multiple="true">
 							<c:forEach items="${skills }" var="s">
 								<div class="selectdiv">
